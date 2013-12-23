@@ -87,29 +87,40 @@ Matrix findTranspose(Matrix m)
     return dx;
 }
 
-void solve(Matrix &x, bool d)
+Matrix solve(Matrix &x)
 {
     cout << "Matrix x\n" << x << endl;
-    StartCounter();
     //STEP 1 & 2 Find the minors and Cofactor matrix.
     Matrix coFactor = createCofactor(x);
-        if(d){ cout << "CoFactor Matrix\n" << coFactor << endl; }
+    cout << "CoFactor Matrix\n" << coFactor << endl;
 
     float determinant = findDeterminant(x);
     //STEP 3 Find determinant
-   if(d){  cout << "Determinant\n" << determinant << "\n" << endl;}
+    cout << "Determinant\n" << determinant << "\n" << endl;
 
     //STEP 4 Find transpose of cofactor
     Matrix transpose = findTranspose(coFactor);
-    if(d){ cout << "Transpose Matrix\n" << transpose << endl;}
+    cout << "Transpose Matrix\n" << transpose << endl;
 
     //STEP 5 Find the inverse, multi the transpose and the determinant
-    cout << "Inverse Matrix SOLUTION\n" << (1/determinant) *transpose << endl;
+    Matrix m = (1/determinant) *transpose;
+    cout << "Inverse Matrix SOLUTION\n" << m << endl;
 
-    if(d){ cout << "Test Inverse\n" << x * ((1/determinant) *transpose );}
-    else{cout << "Performance(ns): " << GetCounter();}
+    cout << "Test Inverse\n" << x * m;
+
+    return m;
 }
 
+
+//Solves the inverse without step output
+Matrix solveFast(Matrix &x)
+{
+    cout << "Matrix x\n" << x << endl;
+    StartCounter();
+    Matrix m = (1/findDeterminant(x)) *  findTranspose(createCofactor(x));
+    cout << "Performance(ns): " << GetCounter() << endl;
+    return m;
+}
 
 int main()
 {
@@ -126,10 +137,21 @@ int main()
     x(2,1) = 3;
     x(2,2) = 4;
     //takeInput(x); //Automated input
-    cout << "Show logs? 1 or 0" << endl;
-    bool debug;
-    cin >> debug;
-    solve(x,debug);
+
+
+      cout << "Show logs? 1 or 0" << endl;
+       bool debug;
+       cin >> debug;
+       if(debug)
+       {
+          Matrix inverseX = solve(x);
+       }
+        else
+        {
+            Matrix inverseX = solveFast(x);
+             cout << inverseX;
+        }
+
 
     return 0;
 }
