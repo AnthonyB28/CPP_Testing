@@ -78,7 +78,7 @@ ostream &operator<<
 	return out;
 }
 
-long &Matrix::operator()(int i, int j) {
+float &Matrix::operator()(int i, int j) {
 	assert(i>=0 && i<dx);
 	assert(j>=0 && j<dy);
 	return p[i][j];
@@ -96,7 +96,7 @@ Matrix operator*(const Matrix& m1, const Matrix& m2) {
 	return prod;
 }
 
-Matrix operator*(long c, const Matrix& m2) {
+Matrix operator*(float c, const Matrix& m2) {
 	Matrix prod(m2);
 	for (int i=0; i<prod.dx; ++i) {
 		for (int j=0; j<prod.dy; ++j) {

@@ -1,4 +1,7 @@
 #include<windows.h>
+#include <iostream>
+
+using namespace std;
 
 double PCFreq = 0.0;
 __int64 CounterStart = 0;
